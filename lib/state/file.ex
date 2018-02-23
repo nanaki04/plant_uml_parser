@@ -19,6 +19,12 @@ defmodule PlantUmlParser.File do
   @spec namespace(file) :: PlantUmlParser.Namespace.namespace
   def namespace(file), do: hd(namespaces(file))
 
+  @spec add_namespace(state, PlantUmlParser.Namespace.namespace) :: state
+  def add_namespace(%State{} = state, namespace) do
+    state
+    |> State.update_file(&add_namespace(&1, namespace))
+  end
+
   @spec add_namespace(file, PlantUmlParser.Namespace.namespace) :: file
   def add_namespace(file, namespace) do
     file
@@ -46,8 +52,7 @@ defmodule PlantUmlParser.File do
   @spec set_name(state, String.t) :: state
   def set_name(%State{} = state, name) do
     state
-    |> State.file
-    |> set_name(name)
+    |> State.update_file(&set_name(&1, name))
   end
 
   @spec set_name(file, String.t) :: file

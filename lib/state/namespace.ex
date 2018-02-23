@@ -11,7 +11,8 @@ defmodule PlantUmlParser.Namespace do
 
   defstruct name: "",
     classes: [],
-    interfaces: []
+    interfaces: [],
+    enums: []
 
   @spec name(namespace) :: String.t
   def name(%{name: name}), do: name

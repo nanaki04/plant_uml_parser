@@ -1,0 +1,32 @@
+@startuml
+
+class GlobalClass {
+  -List<int> _cache
+  +int GetCache(int index)
+}
+
+namespace UI.Scripts.PageViewModel.LimitedQuestEvent {
+  class LimitedQuestEventViewModel {
+    +string Id
+    -int _count
+    +void OnClick(int buttonType, string id)
+    -int GetCount()
+  }
+
+  class HavePointHeaderExchangeItemViewModel {
+    +string ExchangeItemImageResourceID
+  }
+
+  interface IHavePointHeaderExchangeItemViewModel {
+    +string ExchangeItemImageResourceID
+  }
+}
+
+namespace UI.Scripts.PageView.LimitedQuestEvent {
+  class LimitedQuestEventView {
+    +Animator animation
+    +void Bind(LimitedQuestEventViewModel viewModel)
+  }
+}
+
+@enduml
