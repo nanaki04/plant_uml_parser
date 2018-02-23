@@ -28,7 +28,7 @@ defmodule PlantUmlParser.File do
   @spec add_namespace(file, PlantUmlParser.Namespace.namespace) :: file
   def add_namespace(file, namespace) do
     file
-    |> Map.put(:namespaces, namespace)
+    |> Map.update!(:namespaces, &[namespace | &1])
   end
 
   @spec update_namespace(state, fun) :: state

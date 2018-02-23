@@ -1,4 +1,4 @@
-defmodule PlantUmlParser.FileReader do
+defmodule PlantUmlParser.FileParser do
   alias PlantUmlParser.File, as: FileState
   alias PlantUmlParser.NamespaceParser, as: NamespaceParser
 
@@ -21,7 +21,7 @@ defmodule PlantUmlParser.FileReader do
   defp parse_namespaces(state, path) do
     read_file(path)
     |> PlantUmlParser.BlockParser.parse
-    |> Enum.reduce(state, &FileState.add_namespace(&2, NamespaceParser.parse_namespace(&2, &1)))
+    |> Enum.reduce(state, &NamespaceParser.parse_namespace(&2, &1))
   end
 
 end

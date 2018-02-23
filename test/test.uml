@@ -5,27 +5,27 @@ class GlobalClass {
   +int GetCache(int index)
 }
 
-namespace UI.Scripts.PageViewModel.LimitedQuestEvent {
-  class LimitedQuestEventViewModel {
+namespace UI.Scripts.PageViewModel.TestEvent {
+  class TestEventViewModel {
     +string Id
     -int _count
     +void OnClick(int buttonType, string id)
     -int GetCount()
   }
 
-  class HavePointHeaderExchangeItemViewModel {
-    +string ExchangeItemImageResourceID
+  class TestHeaderViewModel {
+    +string TestImageResourceID
   }
 
-  interface IHavePointHeaderExchangeItemViewModel {
-    +string ExchangeItemImageResourceID
+  interface ITestHeaderViewModel {
+    +string TestImageResourceID
   }
 }
 
-namespace UI.Scripts.PageView.LimitedQuestEvent {
-  class LimitedQuestEventView {
+namespace UI.Scripts.PageView.TestEvent {
+  class TestEventView {
     +Animator animation
-    +void Bind(LimitedQuestEventViewModel viewModel)
+    +void Bind(TestEventViewModel viewModel)
   }
 }
 
