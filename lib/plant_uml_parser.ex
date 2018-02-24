@@ -5,7 +5,8 @@ defmodule PlantUmlParser do
   @type file_path :: CodeParserState.Parser.file_path
 
   @impl(CodeParserState.Parser)
-  def parse(_file_path) do
+  def parse(file_path) do
     %CodeParserState{}
+    |> PlantUmlParser.FileParser.parse_file(file_path)
   end
 end
