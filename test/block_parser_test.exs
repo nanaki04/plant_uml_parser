@@ -7,7 +7,7 @@ defmodule BlockParserTest do
     |> (fn result ->
       assert result == %{
         "global" => [
-          "class GlobalClass {\n  -List<int> _cache\n  +int GetCache(int index)\n}"
+          "class GlobalClass {\n  -List<int> _cache // caches stuff\n  +int GetCache(int index) // gets cache\n}"
         ],
         "namespace UI.Scripts.PageView.TestEvent {\n  \n}" => [
           "class TestEventView {\n    +Animator animation\n    +void Bind(TestEventViewModel viewModel)\n  }"

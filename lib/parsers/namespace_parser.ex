@@ -1,5 +1,7 @@
 defmodule PlantUmlParser.NamespaceParser do
   alias PlantUmlParser.Namespace, as: Namespace
+  alias PlantUmlParser.Class, as: Class
+  alias PlantUmlParser.ClassParser, as: ClassParser
 
   @type state :: PlantUmlParser.state
   @type block :: String.t
@@ -26,8 +28,12 @@ defmodule PlantUmlParser.NamespaceParser do
 
   @spec parse_classes(state, [block]) :: state
   defp parse_classes(state, class_blocks) do
-    IO.inspect(class_blocks)
-    state
+    class_blocks
+    |> Enum.reduce(state, fn class_block, state ->
+      state
+      |> Namespace.add_class(%Class{})
+      |> ClassParser.parse_class(class_block)
+    end)
   end
 
 end

@@ -1,8 +1,8 @@
 @startuml
 
 class GlobalClass {
-  -List<int> _cache
-  +int GetCache(int index)
+  -List<int> _cache // caches stuff
+  +int GetCache(int index) // gets cache
 }
 
 namespace UI.Scripts.PageViewModel.TestEvent {
