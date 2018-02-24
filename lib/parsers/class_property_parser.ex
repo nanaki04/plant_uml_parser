@@ -1,8 +1,8 @@
 defmodule PlantUmlParser.ClassPropertyParser do
   alias PlantUmlParser.PropertyParser, as: PropertyParser
-  alias PlantUmlParser.Class, as: Class
+  alias CodeParserState.Class, as: Class
 
-  @type state :: PlantUmlParser.state
+  @type state :: CodeParserState.state
   @type block :: String.t
 
   @spec parse_public_property(state, block) :: state

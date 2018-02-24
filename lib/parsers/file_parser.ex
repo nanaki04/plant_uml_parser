@@ -1,13 +1,13 @@
 defmodule PlantUmlParser.FileParser do
-  alias PlantUmlParser.File, as: FileState
+  alias CodeParserState.File, as: FileState
   alias PlantUmlParser.NamespaceParser, as: NamespaceParser
 
-  @type state :: PlantUmlParser.state
+  @type state :: CodeParserState.state
 
   @spec parse_file(state, String.t) :: state
   def parse_file(state, path) do
     state
-    |> PlantUmlParser.add_file(%PlantUmlParser.File{})
+    |> CodeParserState.add_file(%CodeParserState.File{})
     |> FileState.set_name(path)
     |> parse_namespaces(path)
   end

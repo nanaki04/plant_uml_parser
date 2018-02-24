@@ -1,8 +1,8 @@
 defmodule PlantUmlParser.ClassMethodParser do
   alias PlantUmlParser.MethodParser, as: MethodParser
-  alias PlantUmlParser.Class, as: Class
+  alias CodeParserState.Class, as: Class
 
-  @type state :: PlantUmlParser.state
+  @type state :: CodeParserState.state
   @type block :: String.t
 
   @spec parse_public_method(state, block) :: state

@@ -4,7 +4,7 @@ defmodule PlantUmlParser.FileParserTest do
   import PlantUmlParser.FileParser
 
   test "parses a file into a number of namespace objects" do
-    %PlantUmlParser{}
+    %CodeParserState{}
     |> parse_file("test/test.uml")
     |> (fn %{files: files} ->
       assert hd(files).name == "test/test.uml"

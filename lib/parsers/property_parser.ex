@@ -1,5 +1,5 @@
 defmodule PlantUmlParser.PropertyParser do
-  alias PlantUmlParser.Property, as: Property
+  alias CodeParserState.Property, as: Property
 
   @type property :: Property.property
 

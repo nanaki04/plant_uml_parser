@@ -23,6 +23,7 @@ defmodule PlantUmlParser.Mixfile do
     [
       {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.16", only: [:dev], runtime: false},
+      {:code_parser_state, git: "https://github.com/nanaki04/code_parser_state.git"},
     ]
   end
 end

@@ -1,5 +1,5 @@
 defmodule PlantUmlParser.MethodParser do
-  alias PlantUmlParser.Method, as: Method
+  alias CodeParserState.Method, as: Method
   alias PlantUmlParser.PropertyParser, as: PropertyParser
 
   @type method :: Method.method

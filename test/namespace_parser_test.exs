@@ -5,7 +5,7 @@ defmodule PlantUmlParser.NamespaceParserTest do
   alias PlantUmlParser.FileParser, as: FileParser
 
   test "parses a namespace into a number of child objects" do
-    %PlantUmlParser{}
+    %CodeParserState{}
     |> FileParser.parse_file("test/test.uml")
     |> (fn %{files: files} ->
       assert %{namespaces: [%{classes: classes1}, %{classes: classes2}, %{classes: classes3}]} = hd(files)

@@ -1,15 +1,15 @@
 defmodule PlantUmlParser.NamespaceParser do
-  alias PlantUmlParser.Namespace, as: Namespace
-  alias PlantUmlParser.Class, as: Class
+  alias CodeParserState.Namespace, as: Namespace
+  alias CodeParserState.Class, as: Class
   alias PlantUmlParser.ClassParser, as: ClassParser
 
-  @type state :: PlantUmlParser.state
+  @type state :: CodeParserState.state
   @type block :: String.t
 
   @spec parse_namespace(state, {block, [block]}) :: state
   def parse_namespace(state, {namespace_block, class_blocks}) do
     state
-    |> PlantUmlParser.File.add_namespace(%Namespace{})
+    |> CodeParserState.File.add_namespace(%Namespace{})
     |> parse_name(namespace_block)
     |> parse_classes(class_blocks)
   end
