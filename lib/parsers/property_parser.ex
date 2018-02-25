@@ -6,7 +6,7 @@ defmodule PlantUmlParser.PropertyParser do
   @spec parse_public_property(String.t) :: property
   def parse_public_property(property_block) do
     %Property{}
-    |> Property.set_accessibility("public")
+    |> parse_accessibility(property_block, "public")
     |> parse_type(property_block)
     |> parse_name(property_block)
     |> parse_description(property_block)
@@ -15,15 +15,25 @@ defmodule PlantUmlParser.PropertyParser do
   @spec parse_private_property(String.t) :: property
   def parse_private_property(property_block) do
     %Property{}
-    |> Property.set_accessibility("private")
+    |> parse_accessibility(property_block, "private")
     |> parse_type(property_block)
     |> parse_name(property_block)
     |> parse_description(property_block)
   end
 
+  @spec parse_accessibility(property, String.t, String.t) :: property
+  defp parse_accessibility(property, property_block, default) do
+    Regex.run(~r/(?<=^)const(?=\s)/, property_block)
+    |> (fn
+      [const] -> default <> " " <> const
+      _ -> default
+    end).()
+    |> (&Property.set_accessibility(property, &1)).()
+  end
+
   @spec parse_type(property, String.t) :: property
   defp parse_type(property, property_block) do
-    Regex.run(~r/(?<=^)[<>\w]+/, property_block)
+    Regex.run(~r/(?<=^)[^(const)][<>\w]+(?=\s)(?!\s\/)|(?<=const\s)[<>\w]+(?=\s)(?!\s\/)/, property_block)
     |> (fn
       nil -> ""
       [] -> ""
@@ -34,7 +44,7 @@ defmodule PlantUmlParser.PropertyParser do
 
   @spec parse_name(property, String.t) :: property
   defp parse_name(property, property_block) do
-    Regex.run(~r/(?<=\s)\w+/, property_block)
+    Regex.run(~r/\w+(?=$)|\w+(?=\s\/)/, property_block)
     |> (fn
       nil -> ""
       [] -> ""

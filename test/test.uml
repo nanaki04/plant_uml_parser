@@ -27,6 +27,11 @@ namespace UI.Scripts.PageView.TestEvent {
     +Animator animation
     +void Bind(TestEventViewModel viewModel)
   }
+
+  enum ButtonType {
+    Ok
+    Cancel
+  }
 }
 
 @enduml
