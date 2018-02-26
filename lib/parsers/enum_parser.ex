@@ -24,10 +24,12 @@ defmodule PlantUmlParser.EnumParser do
 
   @spec parse_properties(state, block) :: state
   defp parse_properties(state, enum_block) do
-    Regex.scan(~r/(?<!enum\s)(?<=\s).+[^\)](?=\n)/, enum_block)
+    Regex.scan(~r/(?<!enum\s)(?<=\s).+[^\)\}](?=\n)/, enum_block)
     |> (fn
       [] -> state
-      properties -> hd(properties) |> Enum.reduce(state, &PlantUmlParser.EnumPropertyParser.parse_public_property(&2, &1))
+      properties ->
+        properties
+        |> Enum.reduce(state, &PlantUmlParser.EnumPropertyParser.parse_public_property(&2, hd(&1) |> String.trim))
     end).()
   end
 
