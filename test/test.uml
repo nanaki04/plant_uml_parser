@@ -6,29 +6,29 @@ class GlobalClass { // global class comment
 }
 
 namespace UI.Scripts.PageViewModel.TestEvent {
-  class TestEventViewModel {
+  class TestEventViewModel { // comment 2
     +string Id
     -int _count
     +void OnClick(int buttonType, string id)
     -int GetCount()
   }
 
-  class TestHeaderViewModel {
+  class TestHeaderViewModel { // comment 3
     +string TestImageResourceID
   }
 
-  interface ITestHeaderViewModel {
+  interface ITestHeaderViewModel { // comment 4
     +string TestImageResourceID
   }
 }
 
 namespace UI.Scripts.PageView.TestEvent {
-  class TestEventView {
+  class TestEventView { // comment 5
     +Animator animation
     +void Bind(TestEventViewModel viewModel)
   }
 
-  enum ButtonType {
+  enum ButtonType { // comment 6
     Ok
     Cancel
   }
