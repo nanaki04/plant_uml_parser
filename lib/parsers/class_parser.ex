@@ -8,6 +8,7 @@ defmodule PlantUmlParser.ClassParser do
   def parse_class(state, class_block) do
     state
     |> parse_name(class_block)
+    |> parse_description(class_block)
     |> parse_properties(class_block)
     |> parse_methods(class_block)
   end
@@ -49,6 +50,16 @@ defmodule PlantUmlParser.ClassParser do
       [] -> state
       properties -> properties |> Enum.reduce(state, &PlantUmlParser.ClassMethodParser.parse_private_method(&2, hd &1))
     end).()
+  end
+
+  @spec parse_description(state, block) :: state
+  defp parse_description(state, class_block) do
+    Regex.run(~r/(?<=\/\/).+/, class_block)
+    |> (fn
+      [match] -> match |> String.trim
+      _ -> "TODO"
+    end).()
+    |> (&Class.set_description state, &1).()
   end
 
 end

@@ -1,7 +1,6 @@
 defmodule PlantUmlParser.NamespaceParserTest do
   use ExUnit.Case
   doctest PlantUmlParser.NamespaceParser
-  import PlantUmlParser.NamespaceParser
   alias PlantUmlParser.FileParser, as: FileParser
 
   test "parses a namespace into a number of child objects" do
