@@ -11,13 +11,14 @@ defmodule PlantUmlParser.NamespaceParser do
   @type block :: String.t
 
   @spec parse_namespace(state, {block, [block]}) :: state
-  def parse_namespace(state, {namespace_block, class_blocks}) do
+  def parse_namespace(state, {namespace_block, child_blocks}) do
+    {class_blocks, interface_blocks, enum_blocks} = sort_child_blocks(child_blocks)
     state
     |> CodeParserState.File.add_namespace(%Namespace{})
     |> parse_name(namespace_block)
     |> parse_classes(class_blocks)
-    |> parse_interfaces(class_blocks)
-    |> parse_enums(class_blocks)
+    |> parse_interfaces(interface_blocks)
+    |> parse_enums(enum_blocks)
   end
 
   @spec parse_name(state, block) :: state
@@ -42,6 +43,7 @@ defmodule PlantUmlParser.NamespaceParser do
     end)
   end
 
+  @spec parse_interfaces(state, [block]) :: state
   defp parse_interfaces(state, interface_blocks) do
     interface_blocks
     |> Enum.reduce(state, fn interface_block, state ->
@@ -51,6 +53,7 @@ defmodule PlantUmlParser.NamespaceParser do
     end)
   end
 
+  @spec parse_enums(state, [block]) :: state
   defp parse_enums(state, enum_blocks) do
     enum_blocks
     |> Enum.reduce(state, fn enum_block, state ->
@@ -58,6 +61,31 @@ defmodule PlantUmlParser.NamespaceParser do
       |> Namespace.add_enum(%EnumState{})
       |> EnumParser.parse_enum(enum_block)
     end)
+  end
+
+  @spec sort_child_blocks([block]) :: {[block], [block], [block]}
+  defp sort_child_blocks(child_blocks) do
+    child_blocks
+    |> (&{
+      filter_blocks(&1, fn
+        "class " <> _ -> true
+        _ -> false
+      end),
+      filter_blocks(&1, fn
+        "interface " <> _ -> true
+        _ -> false
+      end),
+      filter_blocks(&1, fn
+        "enum " <> _ -> true
+        _ -> false
+      end)
+    }).()
+  end
+
+  @spec filter_blocks([block], fun) :: [block]
+  defp filter_blocks(child_blocks, filter) do
+    child_blocks
+    |> Enum.filter(&filter.(&1))
   end
 
 end

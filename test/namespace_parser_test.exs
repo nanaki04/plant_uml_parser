@@ -7,10 +7,7 @@ defmodule PlantUmlParser.NamespaceParserTest do
     %CodeParserState{}
     |> FileParser.parse_file("test/test.uml")
     |> (fn %{files: files} ->
-      assert %{namespaces: [%{classes: classes1}, %{classes: classes2}, %{classes: classes3}]} = hd(files)
-      IO.inspect(classes1)
-      IO.inspect(classes2)
-      IO.inspect(classes3)
+      assert %{namespaces: [%{classes: _classes1}, %{classes: _classes2}, %{classes: _classes3}]} = hd(files)
     end).()
   end
 end
