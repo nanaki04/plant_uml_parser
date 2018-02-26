@@ -4,6 +4,6 @@ defmodule PlantUmlParserTest do
 
   test "that it parses plant uml files" do
     result = PlantUmlParser.parse("test/test.uml")
-    assert result = %CodeParserState{}
+    assert %CodeParserState{} = result
   end
 end

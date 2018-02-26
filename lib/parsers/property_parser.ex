@@ -33,7 +33,10 @@ defmodule PlantUmlParser.PropertyParser do
 
   @spec parse_type(property, String.t) :: property
   defp parse_type(property, property_block) do
-    Regex.run(~r/(?<=^)[^(const)][<>\w]+(?=\s)(?!\s\/)|(?<=const\s)[<>\w]+(?=\s)(?!\s\/)/, property_block)
+    case Regex.run(~r/(?<=const\s)[<>\w]+(?=\s)(?!\s\/)/, property_block) do
+      nil -> Regex.run(~r/(?<=^)[<>\w]+(?=\s)(?!\s\/)/, property_block)
+      match -> match
+    end
     |> (fn
       nil -> ""
       [] -> ""

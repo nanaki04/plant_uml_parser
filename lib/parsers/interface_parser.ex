@@ -25,15 +25,10 @@ defmodule PlantUmlParser.InterfaceParser do
 
   @spec parse_properties(state, block) :: state
   defp parse_properties(state, interface_block) do
-    state = Regex.scan(~r/(?<=\+).+[^\)](?=\n)/, interface_block)
+    Regex.scan(~r/(?<=\+).+[^\)](?=\n)/, interface_block)
     |> (fn
       [] -> state
       properties -> hd(properties) |> Enum.reduce(state, &PlantUmlParser.InterfacePropertyParser.parse_public_property(&2, &1))
-    end).()
-    Regex.scan(~r/(?<=\-).+[^\)](?=\n)/, interface_block)
-    |> (fn
-      [] -> state
-      properties -> hd(properties) |> Enum.reduce(state, &PlantUmlParser.InterfacePropertyParser.parse_private_property(&2, &1))
     end).()
   end
 
