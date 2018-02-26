@@ -1,6 +1,6 @@
 @startuml
 
-class GlobalClass {
+class GlobalClass { // global class comment
   -List<int> _cache // caches stuff
   +int GetCache(int index) // gets cache
 }
