@@ -8,9 +8,5 @@ defmodule PlantUmlParser do
   def parse(file_path) do
     %CodeParserState{}
     |> PlantUmlParser.FileParser.parse_file(file_path)
-    |> (fn result ->
-      IO.inspect(result)
-      result
-    end).()
   end
 end
