@@ -10,6 +10,7 @@ defmodule PlantUmlParser.InterfaceParser do
     |> parse_name(interface_block)
     |> parse_properties(interface_block)
     |> parse_methods(interface_block)
+    |> parse_relations(interface_block)
   end
 
   @spec parse_name(state, block) :: state
@@ -44,6 +45,16 @@ defmodule PlantUmlParser.InterfaceParser do
       [] -> state
       properties -> properties |> Enum.reduce(state, &PlantUmlParser.InterfaceMethodParser.parse_private_method(&2, hd &1))
     end).()
+  end
+
+  @spec parse_relations(state, block) :: state
+  defp parse_relations(state, interface_block) do
+    Regex.run(~r/(?<=:\s)[\w,\s]+(?=\s\{)/, interface_block)
+    |> (fn
+      [match] -> match |> String.split(", ")
+      _ -> []
+    end).()
+    |> Enum.reduce(state, &Interface.add_relation(&2, &1))
   end
 
 end
