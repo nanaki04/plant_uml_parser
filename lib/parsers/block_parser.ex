@@ -124,13 +124,13 @@ defmodule PlantUmlParser.BlockParser do
 
   @spec scan_first_inner_block(parser_state) :: String.t | nil
   defp scan_first_inner_block(parser_state) do
-    run parser_state, ~r/\w.+\{.*\n[\w\n\s\d+-.\/<>\$\(\)]*\}/
+    run parser_state, ~r/\w.+\{.*\n[^\{\}]*\}/
   end
 
   @spec remove_first_inner_block(parser_state) :: parser_state
   defp remove_first_inner_block(parser_state) do
     Map.update!(parser_state, :file, fn file ->
-      Regex.replace ~r/\w.+\{.*\n[\w\n\s\d+-.\/<>\$\(\)]*\}/, file, "", global: false
+      Regex.replace ~r/\w.+\{.*\n[^\{\}]*\}/, file, "", global: false
     end)
   end
 
