@@ -27,15 +27,15 @@ defmodule PlantUmlParser.ClassParser do
 
   @spec parse_properties(state, block) :: state
   defp parse_properties(state, class_block) do
-    state = Regex.scan(~r/(?<=\+).+[^\)](?=\n)/, class_block)
+    state = Regex.scan(~r/(?<=\+).+[^\)](?=\n)/, class_block) # TODO methods with comments hit here
     |> (fn
       [] -> state
-      properties -> hd(properties) |> Enum.reduce(state, &PlantUmlParser.ClassPropertyParser.parse_public_property(&2, &1))
+      properties -> properties |> Enum.reduce(state, &PlantUmlParser.ClassPropertyParser.parse_public_property(&2, hd &1))
     end).()
     Regex.scan(~r/(?<=\-).+[^\)](?=\n)/, class_block)
     |> (fn
       [] -> state
-      properties -> hd(properties) |> Enum.reduce(state, &PlantUmlParser.ClassPropertyParser.parse_private_property(&2, &1))
+      properties -> properties |> Enum.reduce(state, &PlantUmlParser.ClassPropertyParser.parse_private_property(&2, hd &1))
     end).()
   end
 
