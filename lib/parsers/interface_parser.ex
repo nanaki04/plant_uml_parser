@@ -29,7 +29,7 @@ defmodule PlantUmlParser.InterfaceParser do
     Regex.scan(~r/(?<=\+).+[^\)](?=\n)/, interface_block)
     |> (fn
       [] -> state
-      properties -> hd(properties) |> Enum.reduce(state, &PlantUmlParser.InterfacePropertyParser.parse_public_property(&2, &1))
+      properties -> properties |> Enum.reduce(state, &PlantUmlParser.InterfacePropertyParser.parse_public_property(&2, hd &1))
     end).()
   end
 
