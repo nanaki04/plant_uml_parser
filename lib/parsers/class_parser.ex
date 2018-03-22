@@ -65,7 +65,8 @@ defmodule PlantUmlParser.ClassParser do
 
   @spec parse_description(state, block) :: state
   defp parse_description(state, class_block) do
-    Regex.run(~r/(?<=\/\/).+/, class_block)
+    first_line = class_block |> String.split("\n") |> hd
+    Regex.run(~r/(?<=\/\/).+/, first_line)
     |> (fn
       [match] -> match |> String.trim
       _ -> "TODO"

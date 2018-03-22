@@ -7,6 +7,7 @@ defmodule PlantUmlParser.InterfaceParser do
   @spec parse_interface(state, block) :: state
   def parse_interface(state, interface_block) do
     state
+    |> parse_description(interface_block)
     |> parse_name(interface_block)
     |> parse_properties(interface_block)
     |> parse_methods(interface_block)
@@ -55,6 +56,17 @@ defmodule PlantUmlParser.InterfaceParser do
       _ -> []
     end).()
     |> Enum.reduce(state, &Interface.add_relation(&2, &1))
+  end
+
+  @spec parse_description(state, block) :: state
+  defp parse_description(state, interface_block) do
+    first_line = interface_block |> String.split("\n") |> hd
+    Regex.run(~r/(?<=\/\/).+/, first_line)
+    |> (fn
+      [match] -> match |> String.trim
+      _ -> "TODO"
+    end).()
+    |> (&Interface.set_description state, &1).()
   end
 
 end
